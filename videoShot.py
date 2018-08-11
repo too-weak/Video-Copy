@@ -11,8 +11,6 @@ def CreateDirIfNotExist(path):
         return True
     return False
 
-
-FrameDir = ''
 def extractFrame(self, videoFile, frameDir, configFilePath):
     videoFile = open(videoFile, 'r')
     configFile = open(configFilePath, 'a')
