@@ -1,5 +1,6 @@
 import os
 import cv2
+import sys
 
 step = 10  #每隔step帧保存一次
 resize_width=227  #要保存的图像的尺寸
@@ -11,12 +12,12 @@ def CreateDirIfNotExist(path):
         return True
     return False
 
-def extractFrame(self, videoFile, frameDir, configFilePath):
+def extractFrame(videoFile, frameDir, configFilePath):
     videoFile = open(videoFile, 'r')
     configFile = open(configFilePath, 'a')
     lines = []
     for line in videoFile.readlines():
-        lines.append(line)
+        lines.append(line.replace('\n', ''))
 
     if not os.path.exists(frameDir):
         os.mkdir(frameDir)
@@ -43,7 +44,7 @@ def extractFrame(self, videoFile, frameDir, configFilePath):
         if fps is None:
             continue
 
-        configFile.write(mediaName + ' ' + str(fps) + '\n')
+        configFile.write(mediaName + '\n' + str(fps) + '\n')
 
         success = True
         idx = 0
@@ -60,3 +61,8 @@ def extractFrame(self, videoFile, frameDir, configFilePath):
         capture.release()
     videoFile.close()
     configFile.close()
+
+videoList = sys.argv[1]
+FrameDir = sys.argv[2]
+configDir = sys.argv[3]
+extractFrame(videoList, FrameDir, configDir)
